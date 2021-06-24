@@ -1,15 +1,17 @@
-import {React, useState, useEffect} from 'react'
+import {React, useState, useEffect, useContext} from 'react'
 import axios from 'axios';
 import AddMovie from './AddMovie.js'
 import Movie from './Movie.js'
+import {SessionContext} from './Session'
 
 export default function Home() {
     const [movies, setMovies] = useState([])
+    const {state} = useContext(SessionContext)
 
     const api = axios.create({
         baseURL: 'http://localhost:7000',
         timeout: 1000,
-        headers: {'authorization': localStorage.getItem("token")}
+        headers: {'authorization': state.user.token}
         });
 
     useEffect(() => {

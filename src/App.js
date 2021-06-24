@@ -9,18 +9,21 @@ import {
   Switch,
 } from "react-router-dom";
 import PrivateRoute from './PrivateRoute.jsx';
+import {SessionProvider} from './Session.js'
 
 const App = () => {
   return (
     <Router>
-      <div className="container">
-        <Navbar />
-        <Switch>
-          <PublicRoute path="/login" component={Login}/>
-          <PrivateRoute path="/home" component={Home}/>
-        </Switch>
-      </div>
-    </Router>
+        <SessionProvider>
+          <div className="container">
+            <Navbar />
+            <Switch>
+              <PublicRoute path="/login" component={Login}/>
+              <PrivateRoute path="/home" component={Home}/>
+            </Switch>
+          </div>
+        </SessionProvider>
+      </Router>
   );
 }
 

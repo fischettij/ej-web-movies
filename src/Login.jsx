@@ -1,32 +1,21 @@
 import {React, useState} from 'react';
-import axios from 'axios';
-import { useHistory } from "react-router-dom";
-
+import {useLogin} from './Session.js'
 
 export default function Login() {
     const [data, setData] = useState({email:"",  password:""})
-    const history = useHistory();
-    const [loginError, setLoginError] = useState(false)
-
+    const { login } = useLogin()
+    
     const handleChange = name => event => {
         setData(prevState => ({ ...prevState, [name]: event.target.value }));
       }
     
     const handleSubmit = (event) =>{
         event.preventDefault();
-        axios.post('http://localhost:7000/login', data)
-        .then(response => {
-            localStorage.setItem("token",response.headers.authorization)
-            history.push("/home");
-          })
-          .catch(_ => setLoginError(true));
+        login(data).catch(err => console.log(">>>>>>>>>>>>>>"));
     }
 
     return (
     <div>
-        {loginError && (<div className="alert alert-danger" role="alert">
-            Bad email or password
-        </div>) }
         <form onSubmit={handleSubmit}>
         <label htmlFor="email">
             Email

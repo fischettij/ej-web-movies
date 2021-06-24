@@ -1,22 +1,17 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
+import React, {useContext} from "react";
+import {useLogout} from "./Session"
+import {SessionContext} from './Session'
 
-const Navbar = () => {
-  
-  let isLogged = !!localStorage.getItem("token")
-  const history = useHistory()
-
-  const logOut = () => {
-    localStorage.removeItem("token");
-    history.push("/login")
- }
+const Navbar = () => {  
+  const {state} = useContext(SessionContext) 
+  const { logout } = useLogout()
 
   return (
     <nav className="navbar navbar-light bg-light">
       <a className="navbar-brand" href="#1">
         Movies
       </a>
-      { isLogged && <button className="btn btn-primary" type="button" onClick={logOut}>LOGOUT</button> }
+      { state.isAuthenticated && <button className="btn btn-primary" type="button" onClick={logout}>LOGOUT</button> }
     </nav>
   );
 };
